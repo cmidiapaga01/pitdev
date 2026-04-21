@@ -7,9 +7,9 @@ import styles from "./ServicesSection.module.css";
 const services = [
   {
     emoji: "🏠",
-    title: "Hotel para Cães",
+    title: "Hotel para Cães - ALTERAR TEXTOS",
     desc: "Seu pet fica livre o tempo todo e dorme com a gente. Monitoramento 24h, alimentação personalizada e muito amor.",
-    prices: ["Pequeno/Médio: R$100/diária", "Grande porte: R$120/diária"],
+    prices: ["Pequeno/Médio: R$130/diária", "Grande porte: R$160/diária"],
     highlight: "Acima de 5 diárias com desconto",
     color: "#f07070",
   },
@@ -18,10 +18,10 @@ const services = [
     title: "Creche",
     desc: "O espaço perfeito para o seu pet socializar, brincar e gastar energia enquanto você trabalha.",
     prices: [
-      "Avulso: R$80",
-      "1x/semana: R$200/mês",
-      "2x/semana: R$360/mês",
-      "3x/semana: R$480/mês",
+      "Avulso: R$130/dia",
+      "1x/semana: R$400/mês",
+      "2x/semana: R$600/mês",
+      "3x/semana: R$750/mês",
     ],
     highlight: "Pacotes mensais com desconto",
     color: "#40d9c8",
