@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import { motion, AnimatePresence } from 'framer-motion'
-import styles from './HeroSlider.module.css'
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import styles from "./HeroSlider.module.css";
 
 interface Slide {
-  image: string
-  name: string
+  image: string;
+  name: string;
 }
 
 interface Props {
-  slides: Slide[]
+  slides: Slide[];
 }
 
 const imageVariants = {
@@ -24,43 +24,47 @@ const imageVariants = {
   exit: {
     opacity: 0,
     scale: 1.02,
-    transition: { duration: 0.6, ease: 'easeOut' as const },
+    transition: { duration: 0.6, ease: "easeOut" as const },
   },
-}
+};
 
 const captionVariants = {
   initial: { opacity: 0, y: 30 },
   animate: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8, delay: 0.6, ease: [0.25, 0.1, 0.25, 1] as const },
+    transition: {
+      duration: 0.8,
+      delay: 0.6,
+      ease: [0.25, 0.1, 0.25, 1] as const,
+    },
   },
   exit: {
     opacity: 0,
     y: -20,
-    transition: { duration: 0.4, ease: 'easeIn' as const },
+    transition: { duration: 0.4, ease: "easeIn" as const },
   },
-}
+};
 
 export default function HeroSlider({ slides }: Props) {
-  const [index, setIndex] = useState(0)
-  const [scrollY, setScrollY] = useState(0)
+  const [index, setIndex] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    if (slides.length <= 1) return
+    if (slides.length <= 1) return;
     const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % slides.length)
-    }, 8000)
-    return () => clearInterval(interval)
-  }, [slides])
+      setIndex((prev) => (prev + 1) % slides.length);
+    }, 8000);
+    return () => clearInterval(interval);
+  }, [slides]);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  const slide = slides[index]
+  const slide = slides[index];
 
   return (
     <section className={styles.hero}>
@@ -106,11 +110,11 @@ export default function HeroSlider({ slides }: Props) {
           >
             <span className={styles.hero__badge}>🐾 PitPet Store</span>
             <h1 className={styles.hero__title}>
-              Seu pet em{' '}
-              <span className={styles.hero__titleAccent}>boas patas</span>
+              Seu pet {" "}
+              <span className={styles.hero__titleAccent}>bem cuidado e feliz</span>
             </h1>
             <p className={styles.hero__subtitle}>
-              Hotel, creche e banho & tosa com amor desde 2019
+              Hotel e Daycare para cães e gatos, com muito amor e conforto. Deixe seu pet em boas mãos enquanto você viaja ou trabalha.
             </p>
             <a
               href="https://wa.me/5500000000000?text=Olá!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20PitPet%20🐾"
@@ -129,12 +133,12 @@ export default function HeroSlider({ slides }: Props) {
         {slides.map((_, i) => (
           <button
             key={i}
-            className={`${styles.hero__dot} ${i === index ? styles['hero__dot--active'] : ''}`}
+            className={`${styles.hero__dot} ${i === index ? styles["hero__dot--active"] : ""}`}
             onClick={() => setIndex(i)}
             aria-label={`Slide ${i + 1}`}
           />
         ))}
       </div>
     </section>
-  )
+  );
 }

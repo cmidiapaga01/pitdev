@@ -1,44 +1,44 @@
-'use client'
+"use client";
 
-import React, { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
-import styles from './ServicesSection.module.css'
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import styles from "./ServicesSection.module.css";
 
 const services = [
   {
-    emoji: '🏠',
-    title: 'Hotel para Cães',
-    desc: 'Seu pet fica livre o tempo todo e dorme com a gente. Monitoramento 24h, alimentação personalizada e muito amor.',
-    prices: ['Pequeno/Médio: R$100/diária', 'Grande porte: R$120/diária'],
-    highlight: 'Acima de 5 diárias com desconto',
-    color: '#f07070',
+    emoji: "🏠",
+    title: "Hotel para Cães",
+    desc: "Seu pet fica livre o tempo todo e dorme com a gente. Monitoramento 24h, alimentação personalizada e muito amor.",
+    prices: ["Pequeno/Médio: R$100/diária", "Grande porte: R$120/diária"],
+    highlight: "Acima de 5 diárias com desconto",
+    color: "#f07070",
   },
   {
-    emoji: '🌞',
-    title: 'Creche',
-    desc: 'O espaço perfeito para o seu pet socializar, brincar e gastar energia enquanto você trabalha.',
+    emoji: "🌞",
+    title: "Creche",
+    desc: "O espaço perfeito para o seu pet socializar, brincar e gastar energia enquanto você trabalha.",
     prices: [
-      'Avulso: R$80',
-      '1x/semana: R$200/mês',
-      '2x/semana: R$360/mês',
-      '3x/semana: R$480/mês',
+      "Avulso: R$80",
+      "1x/semana: R$200/mês",
+      "2x/semana: R$360/mês",
+      "3x/semana: R$480/mês",
     ],
-    highlight: 'Pacotes mensais com desconto',
-    color: '#40d9c8',
+    highlight: "Pacotes mensais com desconto",
+    color: "#40d9c8",
   },
   {
-    emoji: '🛁',
-    title: 'Banho & Tosa',
-    desc: 'Banho humanizado sem gaiolinha. No dia do check-out, seu pet sai limpinho e cheiroso!',
-    prices: ['Consulte valores por porte'],
-    highlight: 'Disponível no dia do check-out',
-    color: '#ffa8a8',
+    emoji: "🛁",
+    title: "Banho & Tosa",
+    desc: "Banho humanizado sem gaiolinha. No dia do check-out, seu pet sai limpinho e cheiroso!",
+    prices: ["Consulte valores por porte"],
+    highlight: "Disponível no dia do check-out",
+    color: "#ffa8a8",
   },
-]
+];
 
 export default function ServicesSection() {
-  const ref = useRef<HTMLElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <section ref={ref} className={styles.services}>
@@ -50,9 +50,12 @@ export default function ServicesSection() {
           transition={{ duration: 0.6 }}
         >
           <span className={styles.services__kicker}>🐾 Nossos Serviços</span>
-          <h2 className={styles.services__title}>Cuidado completo para o seu pet</h2>
+          <h2 className={styles.services__title}>
+            Cuidado completo para o seu pet
+          </h2>
           <p className={styles.services__subtitle}>
-            Tudo que o seu animalzinho precisa em um só lugar, com muito carinho e profissionalismo.
+            Tudo que o seu animalzinho precisa em um só lugar, com muito carinho
+            e profissionalismo.
           </p>
         </motion.div>
 
@@ -64,7 +67,7 @@ export default function ServicesSection() {
               initial={{ opacity: 0, y: 40 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.15 }}
-              style={{ '--card-accent': s.color } as React.CSSProperties}
+              style={{ "--card-accent": s.color } as React.CSSProperties}
             >
               <div className={styles.services__cardEmoji}>{s.emoji}</div>
               <h3 className={styles.services__cardTitle}>{s.title}</h3>
@@ -92,5 +95,5 @@ export default function ServicesSection() {
         </motion.p>
       </div>
     </section>
-  )
+  );
 }

@@ -5,10 +5,10 @@ import { DayPicker } from 'react-day-picker'
 import { ptBR } from 'date-fns/locale'
 import { format } from 'date-fns'
 import type { DateRange } from '@/types/booking'
-// import ClimateIcon from './ClimateIcon'
 import { useDateRangePicker } from './useDateRangePicker'
 import { useMediaQuery } from './useMediaQuery'
 import { trackCalendarApply, trackCalendarOpen } from '@/lib/gtm'
+import { validateMinStay, buildDisabledDays } from '@/lib/pricing'
 import 'react-day-picker/dist/style.css'
 import styles from './DateRangePicker.module.css'
 
@@ -325,7 +325,10 @@ export default function DateRangePicker({ value, onChange, onlyCheckInTrigger = 
                     mode="range"
                     // month={today}
                     today={today}
-                    disabled={{ before: today }}
+                    disabled={[
+                      { before: today },
+                      ...(draft.from && !draft.to ? [buildDisabledDays(draft.from)] : []),
+                    ]}
                     selected={{
                       from: draft.from ?? undefined,
                       to: draft.to ?? undefined,
@@ -360,7 +363,7 @@ export default function DateRangePicker({ value, onChange, onlyCheckInTrigger = 
 
                 {(validationHint || (draft.from && !draft.to)) && (
                   <p className={styles['date-picker-modal__hint']}>
-                    {validationHint || 'Selecione a data de check-out'}
+                    {validationHint || 'Mínimo 3 noites (ou 2 com fim de semana)'}
                   </p>
                 )}
 
@@ -375,6 +378,11 @@ export default function DateRangePicker({ value, onChange, onlyCheckInTrigger = 
                       }
                       if (draft.from.getTime() === draft.to.getTime()) {
                         setValidationHint('Selecione a data de check-out')
+                        return
+                      }
+                      const minStay = validateMinStay(draft.from, draft.to)
+                      if (!minStay.valid) {
+                        setValidationHint(minStay.message)
                         return
                       }
                       setValidationHint(null)

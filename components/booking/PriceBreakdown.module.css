@@ -1,0 +1,132 @@
+/* =====================================================
+   PRICE BREAKDOWN
+   ===================================================== */
+
+.breakdown {
+  width: 100%;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 0.9rem 1rem 0.75rem;
+  background: #fafafa;
+  border-radius: 0 0 1rem 1rem;
+  animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Header ─────────────────────────────────────── */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.header__title {
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #777;
+}
+
+.header__weight {
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #d95050;
+}
+
+.header__weightDetail {
+  font-weight: 400;
+  color: #999;
+}
+
+/* ─── Night list ──────────────────────────────────── */
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin-bottom: 0.6rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-size: 0.78rem;
+}
+
+.row__date {
+  color: #444;
+  text-transform: capitalize;
+}
+
+.row__badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  padding: 0.1em 0.4em;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.row__badge--weekday {
+  background: rgba(0, 0, 0, 0.06);
+  color: #666;
+}
+
+.row__badge--weekend {
+  background: rgba(217, 80, 80, 0.1);
+  color: #d95050;
+}
+
+.row__calc {
+  color: #888;
+  font-size: 0.75rem;
+  text-align: right;
+}
+
+.row__surcharge {
+  color: #d95050;
+}
+
+.row__total {
+  font-weight: 700;
+  color: #222;
+  min-width: 3.5rem;
+  text-align: right;
+}
+
+/* ─── Footer total ────────────────────────────────── */
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.footer__label {
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.footer__total {
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #222;
+}

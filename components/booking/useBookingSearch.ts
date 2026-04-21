@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import type { BookingSearchParams, DateRange, Guests } from '@/types/booking'
+import type { BookingSearchParams, DateRange, PetWeight } from '@/types/booking'
 
 interface UseBookingSearchProps {
   onSearch?: (params: BookingSearchParams) => void
@@ -14,7 +14,7 @@ export function useBookingSearch({ onSearch, hideLocation }: UseBookingSearchPro
     from: null,
     to: null,
   })
-  const [guests, setGuests] = useState<Guests>({ adults: 1, children: 0 })
+  const [petWeight, setPetWeight] = useState<PetWeight>({ tier: 0 })
 
   const canSearch = useMemo(() => {
     if (hideLocation) return dates.from && dates.to
@@ -23,7 +23,7 @@ export function useBookingSearch({ onSearch, hideLocation }: UseBookingSearchPro
 
   const handleSearch = () => {
     if (!canSearch) return
-    onSearch?.({ location, dates, guests })
+    onSearch?.({ location, dates, petWeight })
   }
 
   return {
@@ -31,8 +31,8 @@ export function useBookingSearch({ onSearch, hideLocation }: UseBookingSearchPro
     setLocation,
     dates,
     setDates,
-    guests,
-    setGuests,
+    petWeight,
+    setPetWeight,
     canSearch,
     handleSearch,
   }

@@ -13,8 +13,15 @@ export interface Guests {
   children: number;
 }
 
+/** Index into WEIGHT_TIERS array (0=small, 1=medium, 2=large, 3=giant) */
+export type PetWeightTier = 0 | 1 | 2 | 3;
+
+export interface PetWeight {
+  tier: PetWeightTier;
+}
+
 export interface BookingSearchParams {
   location: string;
   dates: DateRange;
-  guests: Guests;
+  petWeight: PetWeight;
 }

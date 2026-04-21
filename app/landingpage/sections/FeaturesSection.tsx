@@ -1,41 +1,41 @@
-'use client'
+"use client";
 
-import React, { useRef } from 'react'
-import { motion, useInView } from 'framer-motion'
-import Image from 'next/image'
-import { FaHeart, FaPaw, FaUserMd, FaBath } from 'react-icons/fa'
-import styles from './FeaturesSection.module.css'
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
+import { FaHeart, FaPaw, FaUserMd, FaBath } from "react-icons/fa";
+import styles from "./FeaturesSection.module.css";
 
 const features = [
   {
     icon: <FaHeart />,
-    title: 'Cuidado humanizado 24h',
-    desc: 'Ficamos 24h com seu pet. Ele dorme com a gente, fica solto e é tratado como parte da família.',
+    title: "Cuidado humanizado 24h",
+    desc: "Ficamos 24h com seu pet. Ele dorme com a gente, fica solto e é tratado como parte da família.",
   },
   {
     icon: <FaPaw />,
-    title: 'Sem gaiolinha',
-    desc: 'Os pets ficam livres o tempo todo — no banho, na creche e no hotel. Espaço aberto e acolhedor.',
+    title: "Sem gaiolinha",
+    desc: "Os pets ficam livres o tempo todo — no banho, na creche e no hotel. Espaço aberto e acolhedor.",
   },
   {
     icon: <FaUserMd />,
-    title: 'Assistência veterinária',
-    desc: 'Temos a Dra. Camila Cordeiro disponível para qualquer necessidade durante a estadia.',
+    title: "Assistência veterinária",
+    desc: "Temos a Dra. Camila Cordeiro disponível para qualquer necessidade durante a estadia.",
   },
   {
     icon: <FaBath />,
-    title: 'Banho & Tosa no check-out',
-    desc: 'No dia de ir pra casa, seu pet pode sair limpinho e cheiroso com nosso serviço de banho & tosa.',
+    title: "Banho & Tosa no check-out",
+    desc: "No dia de ir pra casa, seu pet pode sair limpinho e cheiroso com nosso serviço de banho & tosa.",
   },
-]
+];
 
 interface FeaturesSectionProps {
-  imageSrc: string
+  imageSrc: string;
 }
 
 export default function FeaturesSection({ imageSrc }: FeaturesSectionProps) {
-  const ref = useRef<HTMLElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px' })
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
     <section ref={ref} className={styles.section}>
@@ -53,7 +53,7 @@ export default function FeaturesSection({ imageSrc }: FeaturesSectionProps) {
               alt="Pets felizes no PitPet"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              style={{ objectFit: 'cover' }}
+              style={{ objectFit: "cover" }}
             />
           </div>
           <div className={styles.imageDecor} />
@@ -86,8 +86,8 @@ export default function FeaturesSection({ imageSrc }: FeaturesSectionProps) {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            Mais de 1.000 animais já passaram pelo PitPet desde 2019. Descubra por que somos o lar
-            favorito dos pets da região.
+            Mais de 1.000 animais já passaram pelo PitPet desde 2019. Descubra
+            por que somos o lar favorito dos pets da região.
           </motion.p>
 
           <div className={styles.featuresList}>
@@ -110,5 +110,5 @@ export default function FeaturesSection({ imageSrc }: FeaturesSectionProps) {
         </div>
       </div>
     </section>
-  )
+  );
 }

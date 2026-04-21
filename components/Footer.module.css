@@ -26,31 +26,17 @@
 /* ===== Brand ===== */
 .brand {}
 
-.logoText {
-  display: flex;
-  align-items: baseline;
-  gap: 0.05em;
-  font-family: var(--font-fredoka), cursive;
-  font-size: 2rem;
-  font-weight: 700;
+.logoLink {
+  display: inline-flex;
   margin-bottom: 0.75rem;
 }
 
-.logoPit {
-  color: #f07070;
-}
-
-.logoPet {
-  color: #40d9c8;
-}
-
-.logoStore {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.85rem;
-  font-weight: 400;
-  margin-left: 0.2em;
-  align-self: flex-end;
-  margin-bottom: 0.1em;
+.logoImg {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+  /* SVG on dark bg — filter makes white/transparent logo visible */
+  filter: brightness(0) invert(1);
 }
 
 .tagline {

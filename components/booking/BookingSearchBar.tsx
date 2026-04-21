@@ -5,7 +5,8 @@ import { format } from 'date-fns'
 import { useRouter } from 'next/navigation'
 import LocationSelect from './LocationSelect'
 import DateRangePicker from './DateRangePicker'
-import GuestsSelector from './GuestsSelector'
+import PetWeightSelector from './PetWeightSelector'
+import PriceBreakdown from './PriceBreakdown'
 import { useBookingContext } from './BookingContext'
 import { trackBookingCtaClick, trackWhatsAppClick } from '@/lib/gtm'
 import { buildWhatsAppRedirectUrl } from '@/lib/whatsapp-redirect'
@@ -23,19 +24,15 @@ export default function BookingSearchBar({
   hotelName,
 }: Props) {
   const router = useRouter()
-  const { location, setLocation, dates, setDates, guests, setGuests, canSearch, handleSearch } =
+  const { location, setLocation, dates, setDates, petWeight, setPetWeight, canSearch, handleSearch, pricing } =
     useBookingContext()
 
-  // Nudge attention to guests after dates are selected
-  const [highlightGuests, setHighlightGuests] = useState(false)
+  // Nudge attention to pet weight selector after dates are selected
+  const [highlightWeight, setHighlightWeight] = useState(false)
 
   useEffect(() => {
     const hasDates = Boolean(dates.from && dates.to)
-    if (hasDates) {
-      setHighlightGuests(true)
-    } else {
-      setHighlightGuests(false)
-    }
+    setHighlightWeight(hasDates)
   }, [dates.from, dates.to])
 
   // Scroll main DRP into view if dates are selected from sticky picker and DRP is off-screen
@@ -70,7 +67,7 @@ export default function BookingSearchBar({
               </div>
             )}
 
-            {/* CHECK-IN DATE */}
+            {/* CHECK-IN / CHECK-OUT DATES */}
             <div className={styles.booking__field}>
               <p className={styles.booking__dateHint}>
                 {dates.from && dates.to ? 'Datas selecionadas ✅' : 'Clique e selecione suas datas'}
@@ -78,9 +75,9 @@ export default function BookingSearchBar({
               <DateRangePicker value={dates} onChange={setDates} />
             </div>
 
-            {/* GUESTS */}
+            {/* PET WEIGHT */}
             <div className={styles.booking__field}>
-              <GuestsSelector value={guests} onChange={setGuests} highlight={highlightGuests} />
+              <PetWeightSelector value={petWeight} onChange={setPetWeight} highlight={highlightWeight} />
             </div>
 
             {/* SEARCH BUTTON */}
@@ -101,7 +98,7 @@ export default function BookingSearchBar({
                     source: 'booking_search',
                     ctaLabel: isLoading ? 'Buscando...' : 'Receber cotação',
                     hasDates: Boolean(dates.from && dates.to),
-                    hasGuests: Boolean(guests.adults + guests.children > 0),
+                    hasGuests: true,
                     location: location || hotelName || undefined,
                   })
 
@@ -118,8 +115,9 @@ export default function BookingSearchBar({
                       hotel: location || hotelName || undefined,
                       entrada: dates.from ? format(dates.from, 'dd/MM/yyyy') : undefined,
                       saida: dates.to ? format(dates.to, 'dd/MM/yyyy') : undefined,
-                      adults: guests.adults,
-                      children: guests.children,
+                      message: pricing
+                        ? `Porte: ${pricing.weightLabel} (${pricing.weightDetail}) — Total estimado: R$${pricing.subtotal}`
+                        : undefined,
                       src: 'booking_search',
                       eventId,
                     }),
@@ -134,6 +132,9 @@ export default function BookingSearchBar({
               </button>
             </div>
           </div>
+
+          {/* REAL-TIME PRICE BREAKDOWN */}
+          {pricing && <PriceBreakdown pricing={pricing} />}
         </div>
       </div>
     </section>

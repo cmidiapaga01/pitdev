@@ -63,7 +63,9 @@
   padding: 2rem 1.5rem;
   border-top: 4px solid var(--card-accent, #f07070);
   box-shadow: 0 4px 20px rgba(240, 112, 112, 0.1);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
   display: flex;
   flex-direction: column;
   gap: 0.75rem;

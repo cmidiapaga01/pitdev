@@ -12,7 +12,7 @@ export const fadeUp = {
       ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
     },
   }),
-}
+};
 
 export const staggerContainer = {
   hidden: {},
@@ -22,7 +22,7 @@ export const staggerContainer = {
       delayChildren: 0.1,
     },
   },
-}
+};
 
 export const scaleIn = {
   hidden: { opacity: 0, scale: 0.85 },
@@ -35,4 +35,4 @@ export const scaleIn = {
       ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number],
     },
   }),
-}
+};

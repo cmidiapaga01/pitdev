@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 /* =====================================================
    PITPET STORE — DESIGN SYSTEM
@@ -8,7 +8,7 @@
 :root {
   /* ===== TYPOGRAPHY ===== */
   --font-sans: var(--font-nunito), system-ui, sans-serif;
-  --font-serif: var(--font-fredoka), 'Comic Sans MS', cursive;
+  --font-serif: var(--font-fredoka), "Comic Sans MS", cursive;
 
   --font-weight-regular: 400;
   --font-weight-medium: 500;

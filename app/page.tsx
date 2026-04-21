@@ -1,37 +1,37 @@
-import TopNavBar from '@/components/navigation/TopNavBar'
-import SecondaryNav from '@/components/navigation/SecondaryNav'
-import HeroSlider from '@/components/home/HeroSlider'
-import HeroPromo from '@/components/home/HeroPromo'
-import BookingSection from '@/components/booking/BookingSection'
-import TestimonialsSection from '@/app/landingpage/sections/TestimonialsSection'
-import TrustBar from '@/app/landingpage/sections/TrustBar'
-import FeaturesSection from '@/app/landingpage/sections/FeaturesSection'
-import ServicesSection from '@/app/landingpage/sections/ServicesSection'
-import Footer from '@/components/Footer'
-import FloatingWhatsApp from '@/components/FloatingWhatsApp'
+import TopNavBar from "@/components/navigation/TopNavBar";
+import SecondaryNav from "@/components/navigation/SecondaryNav";
+import HeroSlider from "@/components/home/HeroSlider";
+import HeroPromo from "@/components/home/HeroPromo";
+import BookingSection from "@/components/booking/BookingSection";
+import TestimonialsSection from "@/app/landingpage/sections/TestimonialsSection";
+import TrustBar from "@/app/landingpage/sections/TrustBar";
+import FeaturesSection from "@/app/landingpage/sections/FeaturesSection";
+import ServicesSection from "@/app/landingpage/sections/ServicesSection";
+import Footer from "@/components/Footer";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 
 const heroSlides = [
-  { image: '/assets/images/hero-1.jpg', name: 'Happy dogs playing' },
-  { image: '/assets/images/hero-2.jpg', name: 'Dog on playground' },
-  { image: '/assets/images/hero-3.jpg', name: 'Dog in pool' },
-  { image: '/assets/images/hero-4.jpg', name: 'Dog swimming' },
-  { image: '/assets/images/hero-5.jpg', name: 'Dog in ball pit' },
-]
+  { image: "/assets/images/hero-1.jpg", name: "Happy dogs playing" },
+  { image: "/assets/images/hero-2.jpg", name: "Dog on playground" },
+  { image: "/assets/images/hero-3.jpg", name: "Dog in pool" },
+  { image: "/assets/images/hero-4.jpg", name: "Dog swimming" },
+  { image: "/assets/images/hero-5.jpg", name: "Dog in ball pit" },
+];
 
 export default function Home() {
   const organizationSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: 'PitPet Store',
-    url: 'https://pitpetstore.com.br',
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "PitPet Store",
+    url: "https://pitpetstore.com.br",
     description:
-      'PitPet Store — Hotel, creche e banho & tosa para cães. Cuidado humanizado 24h/dia, desde 2019.',
+      "PitPet Store — Hotel, creche e banho & tosa para cães. Cuidado humanizado 24h/dia, desde 2019.",
     address: {
-      '@type': 'PostalAddress',
-      addressCountry: 'BR',
+      "@type": "PostalAddress",
+      addressCountry: "BR",
     },
-    sameAs: ['https://www.instagram.com/pitpetstore'],
-  }
+    sameAs: ["https://www.instagram.com/pitpetstore"],
+  };
 
   return (
     <>
@@ -55,15 +55,13 @@ export default function Home() {
       />
 
       <BookingSection />
-
+      <TestimonialsSection />
       <ServicesSection />
       <TrustBar />
       <FeaturesSection imageSrc="/assets/images/hero-4.jpg" />
-      <TestimonialsSection />
-
       <FloatingWhatsApp message="Olá! Gostaria de informações sobre o PitPet Store 🐾" />
 
       <Footer />
     </>
-  )
+  );
 }
