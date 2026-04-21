@@ -114,7 +114,7 @@ export default function HeroSlider({ slides }: Props) {
               <span className={styles.hero__titleAccent}>bem cuidado e feliz</span>
             </h1>
             <p className={styles.hero__subtitle}>
-              Hotel e Daycare para cães e gatos, com muito amor e conforto. Deixe seu pet em boas mãos enquanto você viaja ou trabalha.
+              Carinho e segurança para nossos anjos!
             </p>
             <a
               href="https://wa.me/5500000000000?text=Olá!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20PitPet%20🐾"
