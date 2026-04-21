@@ -1,0 +1,147 @@
+@import 'tailwindcss';
+
+/* =====================================================
+   PITPET STORE — DESIGN SYSTEM
+   Playful & warm pet hotel brand
+===================================================== */
+
+:root {
+  /* ===== TYPOGRAPHY ===== */
+  --font-sans: var(--font-nunito), system-ui, sans-serif;
+  --font-serif: var(--font-fredoka), 'Comic Sans MS', cursive;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+
+  /* ===== PITPET COLOR PALETTE ===== */
+  /* Primary — Coral / Salmon Pink */
+  --color-primary: #f07070;
+  --color-primary-light: #ffa8a8;
+  --color-primary-dark: #d95050;
+  --color-primary-foreground: #ffffff;
+
+  /* Accent — Turquoise / Teal */
+  --color-secondary: #40d9c8;
+  --color-secondary-light: #7eeee5;
+  --color-secondary-dark: #00b5aa;
+  --color-secondary-foreground: #ffffff;
+
+  /* Neutral palette */
+  --color-neutral-50: #fff5f4;
+  --color-neutral-100: #ffeaea;
+  --color-neutral-200: #ffd4d4;
+  --color-neutral-300: #ffb8b8;
+  --color-neutral-400: #f09090;
+  --color-neutral-500: #c06060;
+  --color-neutral-600: #904040;
+  --color-neutral-700: #602020;
+  --color-neutral-800: #3d1010;
+  --color-neutral-900: #200808;
+
+  /* Semantic text colors */
+  --color-text-primary: #2c1810;
+  --color-text-secondary: #5c3d30;
+  --color-text-muted: #8a6050;
+
+  /* Backgrounds */
+  --color-background: #fff5f4;
+  --color-foreground: #ffeaea;
+  --color-surface: #ffffff;
+  --color-surface-elevated: #fff9f8;
+
+  /* Borders */
+  --color-border: #ffd4d4;
+  --color-border-strong: #ffb8b8;
+
+  --color-ring: #f07070;
+
+  /* Section accent */
+  --color-accent-bg: #ffeaea;
+
+  /* Legacy aliases */
+  --color-accent: var(--color-secondary);
+  --color-accent-foreground: var(--color-secondary-foreground);
+  --color-muted: #fff5f4;
+  --color-muted-foreground: #8a6050;
+
+  /* ===== SPACING ===== */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+
+  /* ===== LAYOUT ===== */
+  --content-max-width: 1200px;
+  --content-padding-x: clamp(0.75rem, 2vw, 1rem);
+  --content-padding-y: clamp(1rem, 2vw, 1rem);
+  --content-gap: clamp(2rem, 4vw, 3.5rem);
+
+  /* ===== RADIUS ===== */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+
+  /* ===== SHADOWS ===== */
+  --shadow-sm: 0 1px 4px rgba(240, 112, 112, 0.12);
+  --shadow-md: 0 4px 12px rgba(240, 112, 112, 0.16);
+  --shadow-lg: 0 10px 30px rgba(240, 112, 112, 0.2);
+  --shadow-xl: 0 20px 50px rgba(240, 112, 112, 0.25);
+  --shadow-soft: var(--shadow-md);
+  --shadow-elevation: var(--shadow-lg);
+}
+
+/* ===== RESET & BASE ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}

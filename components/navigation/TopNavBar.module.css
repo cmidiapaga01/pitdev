@@ -1,0 +1,73 @@
+.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: linear-gradient(135deg, #f07070 0%, #d95050 100%);
+  box-shadow: 0 2px 12px rgba(240, 112, 112, 0.35);
+}
+
+.top-nav__container {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: 0.65rem var(--content-padding-x);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ===== Logo text ===== */
+.top-nav__logo-text {
+  display: flex;
+  align-items: baseline;
+  gap: 0.05em;
+  text-decoration: none;
+  font-family: var(--font-fredoka), cursive;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.top-nav__logo-pit {
+  color: #ffffff;
+}
+
+.top-nav__logo-pet {
+  color: #40d9c8;
+}
+
+.top-nav__logo-store {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin-left: 0.2em;
+  align-self: flex-end;
+  margin-bottom: 0.1em;
+}
+
+/* ===== WhatsApp Button ===== */
+.top-nav__action-link--whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: background 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+}
+
+.top-nav__action-link--whatsapp:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 480px) {
+  .top-nav__logo-text {
+    font-size: 1.4rem;
+  }
+}

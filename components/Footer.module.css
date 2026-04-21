@@ -1,0 +1,195 @@
+.footer {
+  background: linear-gradient(180deg, #3d1010 0%, #2c0a0a 100%);
+  color: rgba(255, 255, 255, 0.85);
+  padding: 3rem 2rem 1.5rem;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr;
+  gap: 3rem;
+  padding-bottom: 2.5rem;
+}
+
+@media (max-width: 900px) {
+  .top {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* ===== Brand ===== */
+.brand {}
+
+.logoText {
+  display: flex;
+  align-items: baseline;
+  gap: 0.05em;
+  font-family: var(--font-fredoka), cursive;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.logoPit {
+  color: #f07070;
+}
+
+.logoPet {
+  color: #40d9c8;
+}
+
+.logoStore {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin-left: 0.2em;
+  align-self: flex-end;
+  margin-bottom: 0.1em;
+}
+
+.tagline {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  max-width: 320px;
+}
+
+.navLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.navLinks a {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.navLinks a:hover {
+  color: #40d9c8;
+}
+
+/* ===== Contact ===== */
+.contact h4,
+.social h4 {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #f07070;
+  margin-bottom: 1rem;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.75rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.contactItem:hover {
+  color: #40d9c8;
+}
+
+.contactItem strong {
+  font-weight: 700;
+}
+
+/* ===== Social ===== */
+.socialIcons {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.socialIcons a {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.socialIcons a:hover {
+  background: #f07070;
+  color: #fff;
+  border-color: #f07070;
+}
+
+.socialHandle {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 1.5rem;
+}
+
+.requirements {
+  margin-top: 0.5rem;
+}
+
+.requirements h5 {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #40d9c8;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.requirements ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.requirements li {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.5;
+}
+
+/* ===== Divider ===== */
+.divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 0 0 1.5rem;
+}
+
+/* ===== Bottom ===== */
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.bottom p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.45);
+  line-height: 1.6;
+}
+
+.legal {
+  font-size: 0.75rem !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+}

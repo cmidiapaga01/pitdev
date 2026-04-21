@@ -1,0 +1,59 @@
+.floatingWhatsApp {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  width: 60px;
+  height: 60px;
+  background: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  text-decoration: none;
+}
+
+.floatingWhatsApp:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.6);
+}
+
+.floatingWhatsApp:active {
+  transform: scale(0.95);
+}
+
+.floatingWhatsApp__icon {
+  color: white;
+  width: 32px;
+  height: 32px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .floatingWhatsApp {
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+  }
+
+  .floatingWhatsApp__icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floatingWhatsApp {
+    transition: none;
+  }
+
+  .floatingWhatsApp:hover,
+  .floatingWhatsApp:active {
+    transform: none;
+  }
+}

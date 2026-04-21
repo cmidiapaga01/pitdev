@@ -1,0 +1,29 @@
+/* Sticky Date Picker styles */
+.stickyDatePicker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 1000;
+  background: #fff;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.1);
+  animation: slideDownSticky 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+}
+
+@keyframes slideDownSticky {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 768px) {
+  .stickyDatePicker {
+    display: none;
+  }
+}

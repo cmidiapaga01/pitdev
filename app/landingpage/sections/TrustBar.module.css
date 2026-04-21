@@ -1,0 +1,55 @@
+.trustBar {
+  background: linear-gradient(135deg, #f07070 0%, #d95050 100%);
+  padding: 3.5rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.trustBar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #40d9c8;
+}
+
+.trustGrid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 700px) {
+  .trustGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.trustItem {
+  text-align: center;
+  color: #fff;
+}
+
+.trustEmoji {
+  font-size: 2rem;
+  margin-bottom: 0.4rem;
+}
+
+.trustNumber {
+  font-family: var(--font-fredoka), cursive;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.1;
+}
+
+.trustLabel {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 0.25rem;
+  font-weight: 600;
+}

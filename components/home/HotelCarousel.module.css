@@ -1,0 +1,233 @@
+/* ==========================================================
+   HOTEL CAROUSEL — Homepage hotel showcase carousel
+   Same visual language as HeroMobile/HeroDesktop
+========================================================== */
+
+.hero {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+/* ===== SLIDER HEIGHT ===== */
+.hero__slider-wrapper {
+  position: relative;
+  height: clamp(280px, 50vh, 550px);
+}
+
+/* ===== IMAGE STACK ===== */
+.hero__image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.hero__imageMotion {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform, opacity;
+}
+
+.hero__image {
+  position: relative !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== OVERLAY ===== */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.05) 0%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  pointer-events: none;
+}
+
+/* ===== CONTENT ===== */
+.hero__content {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-inline: var(--content-padding-x, 1.5rem);
+  padding-bottom: clamp(3rem, 8vh, 5rem);
+  pointer-events: none;
+}
+
+/* ===== LINK WRAPPER ===== */
+.hero__link {
+  text-decoration: none;
+  color: inherit;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.hero__link:hover .hero__cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== TEXT GROUP ===== */
+.hero__textGroup {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* ===== TITLE ===== */
+.hero__title {
+  font-family: var(--font-playfair), Georgia, serif;
+  font-size: clamp(1.6rem, 5vw, 3rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.3),
+    0 8px 30px rgba(0, 0, 0, 0.4),
+    0 16px 50px rgba(0, 0, 0, 0.2);
+  margin: 0;
+  will-change: transform, opacity;
+}
+
+/* ===== CTA HINT ===== */
+.hero__cta {
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  opacity: 0.7;
+  transform: translateY(4px);
+  transition: all 0.3s ease;
+  letter-spacing: 0.04em;
+}
+
+/* ===== ARROWS ===== */
+.hero__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.8rem;
+  color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hero__arrow:hover {
+  transform: translateY(-50%) scale(1.15);
+  background: rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.hero__arrow:active {
+  transform: translateY(-50%) scale(1.05);
+}
+
+.hero__arrow--prev {
+  left: clamp(0.5rem, 3vw, 1.5rem);
+}
+
+.hero__arrow--next {
+  right: clamp(0.5rem, 3vw, 1.5rem);
+}
+
+/* ===== DOT INDICATORS ===== */
+.hero__dots {
+  position: absolute;
+  bottom: clamp(0.75rem, 2vh, 1.5rem);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.hero__dot {
+  width: 6px;
+  height: 6px;
+  min-width: 6px;
+  min-height: 6px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  padding: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: all 0.3s ease;
+}
+
+.hero__dot:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.hero__dot--active {
+  background: #fff;
+  transform: scale(1.4);
+}
+
+/* ===== DESKTOP ===== */
+@media (min-width: 768px) {
+  .hero__slider-wrapper {
+    height: clamp(400px, 55vh, 650px);
+  }
+
+  .hero__arrow {
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 2.2rem;
+  }
+
+  .hero__title {
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+  }
+}
+
+/* ===== SMALL DEVICES ===== */
+@media (max-width: 480px) {
+  .hero__slider-wrapper {
+    height: clamp(250px, 45vh, 500px);
+  }
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  .hero__image {
+    animation: none;
+    transform: scale(1) !important;
+  }
+
+  .hero__arrow:hover {
+    transform: translateY(-50%);
+  }
+}

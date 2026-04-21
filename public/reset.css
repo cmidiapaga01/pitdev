@@ -1,0 +1,102 @@
+/* reset.css — Seguro + Responsivo (padrão moderno) */
+
+/* 1) Box sizing global */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2) Remove margens/paddings padrão */
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* 3) Tipografia base (segura) */
+body {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  line-height: 1.5;
+  color: #262626;
+  background: transparent;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 4) Links sem “surpresas” */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:visited {
+  color: inherit;
+}
+a:active {
+  color: inherit;
+}
+
+/* 5) Imagens e mídias responsivas */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* 6) Form controls herdando fonte */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* 7) Remove estilos padrão chatos */
+button {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* 8) Listas */
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* 9) Títulos/parágrafos */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
+/* 10) Tabelas */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 11) Utilitário existente (ajustado pra mobile) */
+.standart-container {
+  padding: 24px 48px;
+}
+
+@media (max-width: 429px) {
+  .standart-container {
+    padding: 16px 16px;
+  }
+}

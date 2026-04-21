@@ -1,0 +1,70 @@
+/* =====================================================
+   LOCATION SELECT - HILTON STYLE
+   ===================================================== */
+
+.location-select {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+}
+
+.location-select__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.location-select__required {
+  font-weight: 400;
+  opacity: 0.6;
+  font-size: 12px;
+}
+
+.location-select__input {
+  width: 100%;
+  padding: 0;
+  border: none;
+  font-size: 15px;
+  font-weight: 400;
+  color: #333;
+  background: transparent;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+.location-select__input:hover {
+  color: #000;
+}
+
+.location-select__input:focus {
+  color: #000;
+}
+
+.location-select__input option {
+  padding: 0.5rem;
+  font-size: 15px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .location-select {
+    padding: 0;
+  }
+
+  .location-select__label {
+    font-size: 12px;
+  }
+
+  .location-select__input {
+    font-size: 16px;
+    padding: 0.25rem 0;
+  }
+}

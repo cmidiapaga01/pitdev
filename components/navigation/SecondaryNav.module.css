@@ -1,0 +1,94 @@
+.secondary-nav {
+  width: 100%;
+  background: #fff5f4;
+  border-bottom: 2px solid #ffd4d4;
+}
+
+.secondary-nav__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.secondary-nav__list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.secondary-nav__list::-webkit-scrollbar {
+  display: none;
+}
+
+.secondary-nav__item {
+  flex-shrink: 0;
+}
+
+.secondary-nav__link {
+  display: block;
+  padding: 8px 14px;
+
+  font-size: 14px;
+  font-weight: 700;
+  color: #5c3d30;
+  text-decoration: none;
+
+  border-radius: 8px;
+  white-space: nowrap;
+  position: relative;
+
+  transition: all 0.3s ease;
+}
+
+.secondary-nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  background: #40d9c8;
+  border-radius: 0 0 8px 8px;
+  transition: height 0.3s ease;
+}
+
+.secondary-nav__link:hover {
+  background: #ffeaea;
+  color: #d95050;
+}
+
+.secondary-nav__link:hover::after {
+  height: 4px;
+}
+
+/* ACTIVE PAGE - Removed sticky behavior */
+
+/* Desktop */
+
+@media (min-width: 900px) {
+  .secondary-nav__list {
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+
+  .secondary-nav__link {
+    font-size: 15px;
+  }
+}
+.secondary-nav {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .secondary-nav {
+    display: block;
+  }
+}

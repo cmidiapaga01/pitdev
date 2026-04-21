@@ -1,0 +1,13 @@
+.calendar-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 6rem;
+  height: 6rem;
+}
+
+.calendar-icon__svg {
+  width: 60%;
+  height: 60%;
+  color: var(--color-primary);
+}
