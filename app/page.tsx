@@ -45,6 +45,9 @@ export default function Home() {
 
       <HeroSlider slides={heroSlides} />
 
+      <BookingSection />
+      <TestimonialsSection />
+
       <HeroPromo
         title="Seu pet merece as melhores férias."
         subtitle="No PitPet, seu animalzinho fica solto, feliz e bem cuidado. Cuidado humanizado 24h por dia — como se fosse em casa."
@@ -53,9 +56,7 @@ export default function Home() {
         image="/assets/images/hero-2.jpg"
         imageAlt="Cão feliz no PitPet"
       />
-
-      <BookingSection />
-      <TestimonialsSection />
+      
       <ServicesSection />
       <TrustBar />
       <FeaturesSection imageSrc="/assets/images/hero-4.jpg" />

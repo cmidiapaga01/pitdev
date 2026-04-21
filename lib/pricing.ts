@@ -10,8 +10,8 @@ export const WEIGHT_TIERS = [
 ] as const
 
 export const BASE_PRICE = {
-  weekday: 85,  // Mon–Thu (R$/night)
-  weekend: 110, // Fri–Sun (R$/night)
+  weekday: 130,  // Mon–Thu (R$/night)
+  weekend: 160, // Fri–Sun (R$/night)
 } as const
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
