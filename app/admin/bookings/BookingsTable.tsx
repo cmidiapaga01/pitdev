@@ -87,7 +87,7 @@ export function BookingsTable({ bookings }: { bookings: Booking[] }) {
         <tbody>
           {bookings.map((b) => {
             const generatedUrl = links[b.id] ?? (b.precheckin_token
-              ? `${typeof window !== "undefined" ? window.location.origin : "https://pitpetstore.com.br"}/pre-checkin?t=${b.precheckin_token}`
+              ? `${process.env.NEXT_PUBLIC_SITE_URL ?? window.location.origin}/pre-checkin?t=${b.precheckin_token}`
               : null);
 
             return (

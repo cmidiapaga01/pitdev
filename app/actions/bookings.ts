@@ -59,7 +59,7 @@ export async function generatePrecheckinToken(
   if (error) return { success: false, error: error.message };
 
   const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://pitpetstore.com.br";
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://pitdev-mu.vercel.app";
   return { success: true, token, url: `${baseUrl}/pre-checkin?t=${token}` };
 }
 
