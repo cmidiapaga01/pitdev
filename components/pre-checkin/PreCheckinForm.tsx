@@ -160,6 +160,11 @@ export function PreCheckinForm() {
 
     try {
       const response = await submitAssessment(full);
+      if (!response.success) {
+        alert(`Erro ao salvar: ${response.error}`);
+        setIsSubmitting(false);
+        return;
+      }
       setSubmitResult({
         ...response,
         result: engineResult,
@@ -167,11 +172,9 @@ export function PreCheckinForm() {
       // Clear draft on success
       localStorage.removeItem(DRAFT_KEY);
     } catch (err) {
-      setSubmitResult({
-        success: false,
-        error: err instanceof Error ? err.message : "Erro inesperado.",
-        result: engineResult,
-      });
+      alert(`Erro inesperado: ${err instanceof Error ? err.message : String(err)}`);
+      setIsSubmitting(false);
+      return;
     } finally {
       setIsSubmitting(false);
     }
