@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { differenceInDays, parseISO, isValid } from "date-fns";
 import { step3Schema, type Step3Values } from "@/lib/schemas";
@@ -45,8 +44,6 @@ interface VaccineBlockProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   register: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   errors: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   watch: any;
@@ -56,9 +53,6 @@ function VaccineBlock({ vaccineKey, label, icon, register, errors, watch }: Vacc
   const expiresAtValue: string = watch(`${vaccineKey}.expiresAt`) ?? "";
   const status = getVaccineStatus(expiresAtValue);
   const fieldError = errors?.[vaccineKey];
-
-  const [fileName, setFileName] = useState<string>("");
-  const fileRef = useRef<HTMLInputElement>(null);
 
   const statusStyles: Record<VaccineStatus, string> = {
     valid: "bg-emerald-50 border-emerald-200",
@@ -90,9 +84,8 @@ function VaccineBlock({ vaccineKey, label, icon, register, errors, watch }: Vacc
       </div>
 
       {status === "expired" && (
-        <AlertBox type="error" title="Vacina Vencida — Hospedagem Bloqueada">
-          Esta vacina está vencida e coloca outros animais em risco. A reserva
-          não pode ser aprovada até a renovação do cartão de vacinação.
+        <AlertBox type="warning" title="Vacina Vencida — Serviço adicionado automaticamente">
+          Esta vacina está vencida. A equipe realizará verificação sanitária na entrada, que será adicionada como serviço obrigatório.
         </AlertBox>
       )}
 
@@ -121,34 +114,6 @@ function VaccineBlock({ vaccineKey, label, icon, register, errors, watch }: Vacc
         </Field>
       </div>
 
-      {/* File upload */}
-      <div className="mt-3">
-        <label className="block text-sm font-medium text-[#2c1810] mb-1.5">
-          Comprovante de Vacinação
-          <span className="text-[#8a6050] font-normal ml-1">(foto ou PDF)</span>
-        </label>
-        <div
-          className="flex items-center gap-3 border border-dashed border-[#ffd4d4] rounded-xl px-4 py-3 cursor-pointer hover:border-[#f07070] hover:bg-[#fff5f4] transition-all"
-          onClick={() => fileRef.current?.click()}
-        >
-          <span className="text-[#f07070] text-lg">📎</span>
-          <span className="text-sm text-[#8a6050] flex-1 truncate">
-            {fileName || "Clique para anexar arquivo"}
-          </span>
-          <span className="text-xs text-[#c09080]">JPG, PNG, PDF</span>
-        </div>
-        <input
-          ref={fileRef}
-          {...register(`${vaccineKey}.proof`)}
-          type="file"
-          accept="image/*,application/pdf"
-          className="hidden"
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) setFileName(file.name);
-          }}
-        />
-      </div>
     </div>
   );
 }
@@ -157,40 +122,24 @@ export function Step3Vaccines({ defaultValues, onNext, onBack }: Props) {
   const {
     register,
     handleSubmit,
-    control,
     watch,
     formState: { errors },
   } = useForm<Step3Values>({
     resolver: zodResolver(step3Schema),
     defaultValues: {
-      rabies: { appliedAt: "", expiresAt: "", proof: null },
-      v8v10: { appliedAt: "", expiresAt: "", proof: null },
-      kennelCough: { appliedAt: "", expiresAt: "", proof: null },
+      rabies: { appliedAt: "", expiresAt: "" },
+      v8v10: { appliedAt: "", expiresAt: "" },
+      kennelCough: { appliedAt: "", expiresAt: "" },
       ...defaultValues,
     },
   });
 
-  const [hasBlocked, setHasBlocked] = useState(false);
-
-  // Watch for expired vaccines
-  const rabiesExpires = watch("rabies.expiresAt");
-  const v8v10Expires = watch("v8v10.expiresAt");
-  const kennelCoughExpires = watch("kennelCough.expiresAt");
-
-  useEffect(() => {
-    const blocked = [rabiesExpires, v8v10Expires, kennelCoughExpires].some(
-      (d) => d && getVaccineStatus(d) === "expired"
-    );
-    setHasBlocked(blocked);
-  }, [rabiesExpires, v8v10Expires, kennelCoughExpires]);
-
   return (
     <form id="precheckin-form" onSubmit={handleSubmit(onNext)} className="space-y-6">
       <div className="rounded-2xl bg-amber-50 border border-amber-200 px-5 py-4 text-sm text-amber-800">
-        <p className="font-semibold mb-1">⚕️ Documentação Sanitária Obrigatória</p>
+        <p className="font-semibold mb-1">⚕️ Documentação Sanitária</p>
         <p>
-          Todas as vacinas abaixo são obrigatórias para hospedagem. Vacinas
-          vencidas ou ausentes bloqueiam automaticamente a reserva.
+          Informe as datas das vacinas do seu pet. Vacinas vencidas ou ausentes geram serviços adicionais obrigatórios na entrada.
         </p>
       </div>
 
@@ -201,19 +150,10 @@ export function Step3Vaccines({ defaultValues, onNext, onBack }: Props) {
           label={label}
           icon={icon}
           register={register}
-          control={control}
           errors={errors}
           watch={watch}
         />
       ))}
-
-      {hasBlocked && (
-        <AlertBox type="error" title="Reserva Bloqueada">
-          Uma ou mais vacinas obrigatórias estão vencidas. A aprovação da
-          reserva está suspensa. Por favor, atualize o cartão de vacinação do
-          seu pet antes de prosseguir.
-        </AlertBox>
-      )}
 
     </form>
   );

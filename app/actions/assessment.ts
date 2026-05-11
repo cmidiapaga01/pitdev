@@ -6,33 +6,11 @@ import { runAssessmentEngine } from "@/lib/assessment-engine";
 import type { FullFormData } from "@/types/assessment";
 import type { VaccineType } from "@/types/assessment";
 
-// ---- Upload a vaccine proof file to Supabase Storage ----
-async function uploadVaccineProof(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  supabase: any,
-  petId: string,
-  vaccineType: VaccineType,
-  file: File
-): Promise<string | null> {
-  const ext = file.name.split(".").pop() ?? "jpg";
-  const path = `${petId}/${vaccineType}-${Date.now()}.${ext}`;
-
-  const { error } = await supabase.storage
-    .from("vaccine-proofs")
-    .upload(path, file, { upsert: true });
-
-  if (error) {
-    console.error("Upload error:", error.message);
-    return null;
-  }
-
-  // Store the storage path — NOT a public URL.
-  // Use getSignedUrl() when displaying in the admin dashboard.
-  return path;
-}
-
 // ---- Main submission action ----
-export async function submitAssessment(formData: FullFormData): Promise<{
+export async function submitAssessment(
+  formData: FullFormData,
+  bookingToken?: string
+): Promise<{
   success: boolean;
   assessmentId?: string;
   status?: string;
@@ -88,16 +66,15 @@ export async function submitAssessment(formData: FullFormData): Promise<{
 
     if (petError) throw new Error(`Pet insert: ${petError.message}`);
 
-    // 3. Upload vaccine proofs & compute vaccine statuses
+    // 3. Save vaccines
     const vaccineEntries: Array<{
       type: VaccineType;
       appliedAt: string;
       expiresAt: string;
-      proof: File | null;
     }> = [
       { type: "rabies", ...step3.rabies },
       { type: "v8v10", ...step3.v8v10 },
-      { type: "kennel_cough", appliedAt: step3.kennelCough.appliedAt, expiresAt: step3.kennelCough.expiresAt, proof: step3.kennelCough.proof },
+      { type: "kennel_cough", appliedAt: step3.kennelCough.appliedAt, expiresAt: step3.kennelCough.expiresAt },
     ];
 
     // Run assessment engine to get vaccine statuses
@@ -113,30 +90,12 @@ export async function submitAssessment(formData: FullFormData): Promise<{
     }
 
     for (const entry of vaccineEntries) {
-      let proofUrl: string | null = null;
-      if (entry.proof instanceof File && entry.proof.size > 0) {
-        proofUrl = await uploadVaccineProof(
-          supabase,
-          pet.id,
-          entry.type,
-          entry.proof
-        );
-        // Store doc reference
-        if (proofUrl) {
-          await supabase.from("uploaded_documents").insert({
-            pet_id: pet.id,
-            type: `vaccine_${entry.type}`,
-            file_url: proofUrl,
-          });
-        }
-      }
-
       await supabase.from("vaccines").insert({
         pet_id: pet.id,
         type: entry.type,
         applied_at: entry.appliedAt || null,
         expires_at: entry.expiresAt || null,
-        proof_url: proofUrl,
+        proof_url: null,
         status: vaccineStatusMap[entry.type],
       });
     }
@@ -216,6 +175,18 @@ export async function submitAssessment(formData: FullFormData): Promise<{
 
     if (services.length > 0) {
       await supabase.from("required_services").insert(services);
+    }
+
+    // 7. Link booking to this assessment (if form was opened via a booking link)
+    if (bookingToken) {
+      await supabase
+        .from("bookings")
+        .update({
+          assessment_id: assessment.id,
+          tutor_id: tutor.id,
+          status: "submitted",
+        })
+        .eq("precheckin_token", bookingToken);
     }
 
     return {

@@ -106,6 +106,25 @@ create table if not exists uploaded_documents (
 );
 
 -- =====================================================
+-- TABLE: bookings
+-- =====================================================
+create table if not exists bookings (
+  id                uuid primary key default gen_random_uuid(),
+  check_in          date not null,
+  check_out         date not null,
+  nights            integer not null,
+  weight_tier_index integer not null,
+  weight_label      text not null,
+  subtotal          numeric(10,2) not null,
+  status            text not null default 'pending_form'
+                    check (status in ('pending_form', 'form_sent', 'submitted', 'confirmed')),
+  precheckin_token  text unique,
+  tutor_id          uuid references tutors(id),
+  assessment_id     uuid references assessments(id),
+  created_at        timestamptz default now()
+);
+
+-- =====================================================
 -- STORAGE BUCKET: vaccine-proofs
 -- =====================================================
 -- Run in Supabase Dashboard > Storage:
@@ -129,6 +148,7 @@ create table if not exists uploaded_documents (
 -- alter table required_services enable row level security;
 -- alter table uploaded_documents enable row level security;
 -- alter table parasite_control enable row level security;
+-- alter table bookings enable row level security;
 --
 -- create policy "Allow public insert" on tutors for insert with check (true);
 -- create policy "Allow public insert" on pets for insert with check (true);

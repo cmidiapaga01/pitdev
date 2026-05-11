@@ -10,6 +10,7 @@ import PriceBreakdown from './PriceBreakdown'
 import { useBookingContext } from './BookingContext'
 import { trackBookingCtaClick, trackWhatsAppClick } from '@/lib/gtm'
 import { buildWhatsAppRedirectUrl } from '@/lib/whatsapp-redirect'
+import { createBooking } from '@/app/actions/bookings'
 import styles from './BookingSearchBar.module.css'
 
 interface Props {
@@ -108,6 +109,18 @@ export default function BookingSearchBar({
                     event_id: eventId,
                     ctaLabel: isLoading ? 'Buscando...' : 'Receber cotação',
                   })
+
+                  // Save booking to DB (fire-and-forget — doesn't block UX)
+                  if (dates.from && dates.to && pricing) {
+                    createBooking({
+                      checkIn: format(dates.from, 'yyyy-MM-dd'),
+                      checkOut: format(dates.to, 'yyyy-MM-dd'),
+                      nights: pricing.nights.length,
+                      weightTierIndex: petWeight.tier,
+                      weightLabel: `${pricing.weightLabel} (${pricing.weightDetail})`,
+                      subtotal: pricing.subtotal,
+                    }).catch(() => {})
+                  }
 
                   handleSearch()
                   router.push(

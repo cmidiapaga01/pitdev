@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { format, parseISO } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { AnimatePresence, motion } from "framer-motion";
 import { ProgressIndicator } from "@/components/pre-checkin/ProgressIndicator";
 import { Step1TutorInfo } from "@/components/pre-checkin/steps/Step1TutorInfo";
@@ -14,6 +16,7 @@ import { AssessmentResult } from "@/components/pre-checkin/AssessmentResult";
 import { runAssessmentEngine } from "@/lib/assessment-engine";
 import { submitAssessment } from "@/app/actions/assessment";
 import type { FullFormData, AssessmentResult as Result } from "@/types/assessment";
+import type { BookingInfo } from "@/app/actions/bookings";
 import type {
   Step1Values,
   Step2Values,
@@ -25,7 +28,15 @@ import type {
 } from "@/lib/schemas";
 
 const DRAFT_KEY = "pitpet_precheckin_draft";
-const TOTAL_STEPS = 7;
+const _TOTAL_STEPS = 7;
+
+function formatBookingDate(dateStr: string): string {
+  try {
+    return format(parseISO(dateStr), "dd 'de' MMM", { locale: ptBR });
+  } catch {
+    return dateStr;
+  }
+}
 
 const stepVariants = {
   enter: (dir: number) => ({ x: dir > 0 ? 32 : -32, opacity: 0 }),
@@ -41,7 +52,13 @@ function serializeDraft(data: Partial<FullFormData>): string {
   return JSON.stringify(safe);
 }
 
-export function PreCheckinForm() {
+export function PreCheckinForm({
+  booking,
+  bookingToken,
+}: {
+  booking?: BookingInfo;
+  bookingToken?: string;
+}) {
   const [step, setStep] = useState(1);
   const [direction, setDirection] = useState(1);
   const [formData, setFormData] = useState<Partial<FullFormData>>({});
@@ -159,7 +176,7 @@ export function PreCheckinForm() {
     );
 
     try {
-      const response = await submitAssessment(full);
+      const response = await submitAssessment(full, bookingToken);
       if (!response.success) {
         alert(`Erro ao salvar: ${response.error}`);
         setIsSubmitting(false);
@@ -187,6 +204,7 @@ export function PreCheckinForm() {
         result={submitResult.result!}
         petName={formData.step2?.petName ?? "Seu pet"}
         assessmentId={submitResult.assessmentId}
+        booking={booking}
       />
     );
   }
@@ -208,6 +226,36 @@ export function PreCheckinForm() {
       </div>
 
       {/* Progress */}
+      {booking && (
+        <div
+          style={{
+            background: "linear-gradient(135deg, #f07070 0%, #e05555 100%)",
+            borderRadius: "1rem",
+            padding: "1rem 1.25rem",
+            color: "#fff",
+            display: "flex",
+            alignItems: "flex-start",
+            gap: "0.75rem",
+          }}
+        >
+          <span style={{ fontSize: "1.5rem", flexShrink: 0 }}>🏠</span>
+          <div>
+            <p style={{ margin: 0, fontWeight: 700, fontSize: "0.95rem" }}>
+              Sua reserva está quase confirmada!
+            </p>
+            <p style={{ margin: "0.25rem 0 0", fontSize: "0.82rem", opacity: 0.9 }}>
+              {formatBookingDate(booking.checkIn)} → {formatBookingDate(booking.checkOut)}{" "}
+              &nbsp;·&nbsp; {booking.nights} noite{booking.nights !== 1 ? "s" : ""}{" "}
+              &nbsp;·&nbsp; {booking.weightLabel}
+              &nbsp;·&nbsp; <strong>R$ {booking.subtotal.toFixed(2)}</strong>
+            </p>
+            <p style={{ margin: "0.35rem 0 0", fontSize: "0.78rem", opacity: 0.8 }}>
+              Preencha o formulário abaixo para concluir o pré-check-in. ✨
+            </p>
+          </div>
+        </div>
+      )}
+
       <ProgressIndicator currentStep={step} />
 
       {/* Form steps with animation */}

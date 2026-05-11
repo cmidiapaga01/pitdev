@@ -1,13 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { format, parseISO } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import type { AssessmentResult as Result } from "@/types/assessment";
+import type { BookingInfo } from "@/app/actions/bookings";
 import { AlertBox } from "@/components/pre-checkin/FormCard";
 
 interface Props {
   result: Result;
   petName: string;
   assessmentId?: string;
+  booking?: BookingInfo;
 }
 
 const STATUS_CONFIG = {
@@ -45,8 +49,11 @@ const RISK_COLORS: Record<string, string> = {
   critical: "text-red-600 bg-red-50",
 };
 
-export function AssessmentResult({ result, petName, assessmentId }: Props) {
+export function AssessmentResult({ result, petName, assessmentId, booking }: Props) {
   const config = STATUS_CONFIG[result.status];
+
+  const autoServicesTotal = result.autoServices.reduce((sum, s) => sum + s.price, 0);
+  const grandTotal = booking ? booking.subtotal + autoServicesTotal : null;
 
   return (
     <motion.div
@@ -159,6 +166,41 @@ export function AssessmentResult({ result, petName, assessmentId }: Props) {
           Entre em contato com a equipe da PitPet Store pelo WhatsApp para
           verificar as pendências e reagendar após a regularização.
         </AlertBox>
+      )}
+
+      {/* Booking price summary */}
+      {booking && grandTotal !== null && (
+        <div className="rounded-2xl bg-white border border-[#ffd4d4] p-5 shadow-sm">
+          <h3 className="font-semibold text-[#2c1810] mb-3">💰 Resumo de Valores</h3>
+          <div className="space-y-2 text-sm">
+            <div className="flex justify-between text-[#5c3d30]">
+              <span>
+                Hospedagem — {booking.nights} noite{booking.nights !== 1 ? "s" : ""}
+                <span className="text-xs text-[#8a6050] ml-1">
+                  ({format(parseISO(booking.checkIn), "dd/MM", { locale: ptBR })} →{" "}
+                  {format(parseISO(booking.checkOut), "dd/MM", { locale: ptBR })})
+                </span>
+              </span>
+              <span className="font-medium">R$ {booking.subtotal.toFixed(2)}</span>
+            </div>
+            {result.autoServices.map((s) => (
+              <div key={s.serviceType} className="flex justify-between text-amber-700">
+                <span className="flex items-center gap-1">
+                  <span className="text-xs">⚠</span>
+                  {s.reason.split(".")[0]}
+                </span>
+                <span className="font-medium">R$ {s.price.toFixed(2)}</span>
+              </div>
+            ))}
+            <div className="flex justify-between font-bold border-t border-[#ffd4d4] pt-3 mt-1 text-[#2c1810] text-base">
+              <span>Total Estimado</span>
+              <span className="text-[#f07070]">R$ {grandTotal.toFixed(2)}</span>
+            </div>
+            <p className="text-xs text-[#8a6050] mt-1">
+              * Serviços opcionais e ajustes finais serão confirmados na entrada.
+            </p>
+          </div>
+        </div>
       )}
 
       {result.status !== "BLOCKED" && (

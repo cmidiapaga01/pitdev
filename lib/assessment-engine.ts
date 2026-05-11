@@ -28,6 +28,8 @@ const SERVICE_PRICES: Record<string, number> = {
   calming_spa: 60,
   hydration_treatment: 40,
   photo_updates: 20,
+  sanitary_check: 60,
+  behavior_monitoring: 50,
 };
 
 // ---- Included (premium bundled) service prices ----
@@ -61,8 +63,8 @@ function evaluateVaccine(
       warning: {
         type,
         status: "missing",
-        message: `Vacina ${VACCINE_LABELS[type]} não informada. Esta vacina é obrigatória para hospedagem.`,
-        blocksApproval: true,
+        message: `Vacina ${VACCINE_LABELS[type]} não informada. Será realizada triagem sanitária obrigatória na entrada.`,
+        blocksApproval: false,
       },
     };
   }
@@ -74,8 +76,8 @@ function evaluateVaccine(
       warning: {
         type,
         status: "missing",
-        message: `Data de validade da vacina ${VACCINE_LABELS[type]} é inválida.`,
-        blocksApproval: true,
+        message: `Data de validade da vacina ${VACCINE_LABELS[type]} é inválida. Triagem sanitária obrigatória na entrada.`,
+        blocksApproval: false,
       },
     };
   }
@@ -89,8 +91,8 @@ function evaluateVaccine(
       warning: {
         type,
         status: "expired",
-        message: `A vacina ${VACCINE_LABELS[type]} está VENCIDA. Vacinas vencidas colocam outros animais em risco e impedem a hospedagem.`,
-        blocksApproval: true,
+        message: `A vacina ${VACCINE_LABELS[type]} está VENCIDA. Triagem sanitária obrigatória será realizada na entrada (serviço adicionado automaticamente).`,
+        blocksApproval: false,
       },
     };
   }
@@ -113,7 +115,7 @@ function evaluateVaccine(
 // ---- Evaluate all vaccines ----
 function evaluateVaccines(step3: Step3Values): {
   warnings: VaccineWarning[];
-  blockedByVaccine: boolean;
+  autoServices: AutoService[];
 } {
   const entries: Array<{ type: VaccineType; expiresAt: string }> = [
     { type: "rabies", expiresAt: step3.rabies?.expiresAt ?? "" },
@@ -122,35 +124,52 @@ function evaluateVaccines(step3: Step3Values): {
   ];
 
   const warnings: VaccineWarning[] = [];
-  let blockedByVaccine = false;
+  const autoServices: AutoService[] = [];
+  let needsSanitaryCheck = false;
 
   for (const entry of entries) {
     const { warning } = evaluateVaccine(entry.type, entry.expiresAt);
     if (warning) {
       warnings.push(warning);
-      if (warning.blocksApproval) blockedByVaccine = true;
+      if (warning.status === "expired" || warning.status === "missing") {
+        needsSanitaryCheck = true;
+      }
     }
   }
 
-  return { warnings, blockedByVaccine };
+  if (needsSanitaryCheck) {
+    autoServices.push({
+      serviceType: "sanitary_check",
+      mandatory: true,
+      reason: "Triagem sanitária obrigatória na entrada por vacinas vencidas ou ausentes.",
+      price: SERVICE_PRICES.sanitary_check,
+    });
+  }
+
+  return { warnings, autoServices };
 }
 
 // ---- Evaluate behavior risk ----
 function evaluateBehavior(step2: Step2Values): {
-  blocked: boolean;
+  autoServices: AutoService[];
   notes: string[];
   riskPoints: number;
 } {
   const notes: string[] = [];
+  const autoServices: AutoService[] = [];
   let riskPoints = 0;
-  let blocked = false;
 
   if (step2.hasBitten && (step2.foodAggression || step2.destructiveBehavior)) {
-    blocked = true;
+    autoServices.push({
+      serviceType: "behavior_monitoring",
+      mandatory: true,
+      reason: "Histórico de mordidas com agressividade — monitoramento intensivo obrigatório.",
+      price: SERVICE_PRICES.behavior_monitoring,
+    });
     notes.push(
-      "⛔ Pet apresenta histórico de mordidas combinado com agressividade alimentar ou comportamento destrutivo. Hospedagem bloqueada por risco grave."
+      "⚠️ Pet com histórico de mordidas e agressividade. Monitoramento intensivo adicionado automaticamente."
     );
-    riskPoints += 40;
+    riskPoints += 30;
   } else if (step2.hasBitten) {
     notes.push(
       "⚠️ Pet tem histórico de mordidas. Será mantido em área separada e com monitoramento extra."
@@ -186,7 +205,7 @@ function evaluateBehavior(step2: Step2Values): {
     riskPoints += 10;
   }
 
-  return { blocked, notes, riskPoints };
+  return { autoServices, notes, riskPoints };
 }
 
 // ---- Evaluate parasite control ----
@@ -280,22 +299,24 @@ export function runAssessmentEngine(
   step3: Step3Values,
   step4: Step4Values
 ): AssessmentResult {
-  const { warnings: vaccineWarnings, blockedByVaccine } =
+  const { warnings: vaccineWarnings, autoServices: vaccineServices } =
     evaluateVaccines(step3);
   const {
-    blocked: blockedByBehavior,
+    autoServices: behaviorServices,
     notes: behaviorNotes,
     riskPoints: behaviorRisk,
   } = evaluateBehavior(step2);
   const {
-    autoServices,
+    autoServices: parasiteServices,
     notes: parasiteNotes,
     riskPoints: parasiteRisk,
   } = evaluateParasites(step4);
 
+  const autoServices = [...vaccineServices, ...behaviorServices, ...parasiteServices];
+
   const vaccineRisk = vaccineWarnings.reduce((acc, w) => {
-    if (w.status === "expired" || w.status === "missing") return acc + 25;
-    if (w.status === "expiring_soon") return acc + 8;
+    if (w.status === "expired" || w.status === "missing") return acc + 15;
+    if (w.status === "expiring_soon") return acc + 5;
     return acc;
   }, 0);
 
@@ -304,18 +325,13 @@ export function runAssessmentEngine(
   const riskLevel = calcRiskLevel(sanitaryScore);
 
   const hasWarnings =
-    vaccineWarnings.some((w) => !w.blocksApproval) ||
+    vaccineWarnings.length > 0 ||
     behaviorNotes.length > 0 ||
     parasiteNotes.length > 0;
 
-  let status: AssessmentStatus;
-  if (blockedByVaccine || blockedByBehavior) {
-    status = "BLOCKED";
-  } else if (hasWarnings) {
-    status = "APPROVED_WITH_WARNINGS";
-  } else {
-    status = "APPROVED";
-  }
+  const status: AssessmentStatus = hasWarnings
+    ? "APPROVED_WITH_WARNINGS"
+    : "APPROVED";
 
   const sanitaryNotes = [
     ...vaccineWarnings.map((w) => w.message),

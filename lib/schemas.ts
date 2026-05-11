@@ -36,8 +36,6 @@ export const step2Schema = z.object({
 const vaccineEntrySchema = z.object({
   appliedAt: z.string().min(1, "Data de aplicação obrigatória"),
   expiresAt: z.string().min(1, "Data de validade obrigatória"),
-  proof: z.any().nullable(),
-  proofUrl: z.string().optional(),
   status: z.enum(["valid", "expiring_soon", "expired", "missing"]).optional(),
 });
 

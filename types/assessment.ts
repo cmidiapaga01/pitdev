@@ -22,7 +22,9 @@ export type ServiceType =
   | "dental_brushing"
   | "calming_spa"
   | "hydration_treatment"
-  | "photo_updates";
+  | "photo_updates"
+  | "sanitary_check"
+  | "behavior_monitoring";
 
 // ---- Database row types ----
 
@@ -133,8 +135,6 @@ export interface Step2Data {
 export interface VaccineEntry {
   appliedAt: string;
   expiresAt: string;
-  proof: File | null;
-  proofUrl?: string;
   status?: VaccineStatus;
 }
 
