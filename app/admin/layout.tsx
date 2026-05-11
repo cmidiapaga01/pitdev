@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { adminLogout } from "@/app/actions/admin-auth";
 
 export const metadata: Metadata = {
   title: "Admin | PitPet Store",
@@ -7,6 +8,7 @@ export const metadata: Metadata = {
 
 const NAV_ITEMS = [
   { href: "/admin", label: "Dashboard", icon: "🏠" },
+  { href: "/admin/bookings", label: "Reservas", icon: "📅" },
   { href: "/admin/pets", label: "Pets", icon: "🐶" },
   { href: "/admin/tutors", label: "Tutores", icon: "👤" },
   { href: "/admin/alerts", label: "Alertas Sanitários", icon: "🚨" },
@@ -42,13 +44,21 @@ export default function AdminLayout({
             </Link>
           ))}
         </nav>
-        <div className="px-5 py-4 border-t border-gray-100">
+        <div className="px-5 py-4 border-t border-gray-100 space-y-2">
           <Link
             href="/"
-            className="text-xs text-[#8a6050] hover:text-[#f07070] transition-colors"
+            className="block text-xs text-[#8a6050] hover:text-[#f07070] transition-colors"
           >
             ← Voltar ao site
           </Link>
+          <form action={adminLogout}>
+            <button
+              type="submit"
+              className="text-xs text-[#8a6050] hover:text-red-500 transition-colors"
+            >
+              🚪 Sair
+            </button>
+          </form>
         </div>
       </aside>
 
